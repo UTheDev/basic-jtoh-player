@@ -1,0 +1,64 @@
+{
+  "name": "softlocked_jtoh",
+  "tree": {
+    "$className": "DataModel",
+    "$ignoreUnknownInstances": true,
+
+    "ReplicatedStorage": {
+      "Common": {
+        "$path": "src/shared",
+        "$ignoreUnknownInstances": true
+      },
+
+      "Remote": {
+        "$className": "Folder",
+
+        "OnTowerWin": {
+          "$className": "RemoteEvent"
+        },
+        
+        "RequestTower": {
+          "$className": "RemoteFunction"
+        },
+
+        "StopTower": {
+          "$className": "RemoteFunction"
+        }
+      }
+    },
+
+    "ServerScriptService": {
+      "$path": "src/server",
+      "$ignoreUnknownInstances": true
+    },
+
+    "StarterGui": {
+      "$path": "src/gui",
+      "$ignoreUnknownInstances": true
+    },
+
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "$path": "src/client",
+        "$ignoreUnknownInstances": true
+      },
+
+      "StarterCharacterScripts": {
+        "$path": "src/character",
+        "$ignoreUnknownInstances": true
+      }
+    },
+
+    "Workspace": {
+      "$properties": {
+        "FilteringEnabled": true
+      }
+    },
+
+    "SoundService": {
+      "$properties": {
+        "RespectFilteringEnabled": true
+      }
+    }
+  }
+}
