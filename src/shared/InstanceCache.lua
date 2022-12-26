@@ -39,6 +39,22 @@ function InstanceCache.mt:isCached(inst: Instance)
 end
 
 --[[
+    Saves a reference of an instance to the instanceList
+
+    Parameters:
+    inst <Instance> - The instance reference to add
+]]--
+function InstanceCache.mt:cache(inst: Instance)
+    if self:isCached(inst) == false then
+        table.insert(self.instanceList, inst)
+
+        if self.onInitialFind then
+            self.onInitialFind(inst)
+        end
+    end
+end
+
+--[[
     Searches an instance for relevant descendants by name
 
     Parameters:
@@ -50,12 +66,8 @@ function InstanceCache.mt:searchByName(inst: Instance, name: string)
     local onInitialFind = self.onInitialFind
 
     for i, v in pairs(inst:GetDescendants()) do
-        if v.Name == name and self:isCached(v) == false then
-            table.insert(instList, v)
-
-            if onInitialFind then
-                onInitialFind(v)
-            end
+        if v.Name == name then
+            self:cache(v)
         end
     end
 end
@@ -69,10 +81,8 @@ end
 ]]--
 function InstanceCache.mt:searchByEvent(inst: Instance, name: string)
     return inst.DescendantAdded:Connect(function(newInst: Instance)
-        if newInst.Name == name and self:isCached(newInst) == false then
-            if self.onInitialFind then
-                self.onInitialFind(newInst)
-            end
+        if newInst.Name == name then
+            self:cache(newInst)
         end
     end)
 end
