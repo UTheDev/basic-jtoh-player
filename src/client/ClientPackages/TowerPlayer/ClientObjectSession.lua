@@ -23,40 +23,8 @@ function ClientObjectSession.new(clientObjectFolder: Folder, coFolderParent: Ins
 
 	self.isRunning = false
 
-	--self.clientObjects = {};
-
-	-- client object values that request script repository usages
-	--self.scriptRepoUsages = {};
-
-	--self.clientObjectScripts = {};
-
-	-- which ones are client objects?
-	--for i, v in pairs(clientObjectFolder:GetChildren()) do
-	--	-- look for client object values
-	--	local coVal = v:FindFirstChild(CLIENT_OBJECT_NAME)
-	--	if coVal then
-	--		table.insert(self.clientObjects, v);
-	--	else
-	--		-- since certain client objects don't
-	--		-- include the client object value as a direct child,
-	--		-- search their descendants
-	--		for i2, v2 in pairs(v:GetDescendants()) do
-	--			if v2.Name == CLIENT_OBJECT_NAME then
-	--				coVal = v2
-	--				table.insert(self.clientObjects, v);
-	--				break;
-	--			end
-	--		end
-	--	end
-
-	--	if coVal:GetAttribute("") then
-
-	--	end
-	--end
-
 	self.clientObjectFolder = clientObjectFolder
 	self.coFolderParent = coFolderParent or clientObjectFolder.Parent
-	--self.coFolderClone = nil;
 
 	-- {original, original parent, clone}
 	self.coClones = {}
@@ -96,9 +64,12 @@ end
 ----- legacy LocalPartScript button code -----
 --all of the code below here is no longer used in new buttons but there for compatibility's sake
 local function CheckColor3(color)
+	--[[
 	return pcall(function()
 		local yeet = color:lerp(Color3.new(), 1)
 	end)
+	]]--
+	return typeof(color) == "Color3"
 end
 local function GetAllButtons(color)
 	local IsColor3 = CheckColor3(color)
