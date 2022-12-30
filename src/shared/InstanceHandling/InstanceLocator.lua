@@ -1,11 +1,11 @@
 --[[
     A few utilities for locating instances using cleaner code
 
-    By UTheDev
+    By udev (@UTheDev)
 ]]
 --
 
-local InstanceLocation = {}
+local InstanceLocator = {}
 
 --[[
     This method helps shorten a long :WaitForChild() path.
@@ -14,7 +14,7 @@ local InstanceLocation = {}
     the same as doing ReplicatedStorage:WaitForChild("Baseplate"):WaitForChild("Attachment0")
 ]]
 --
-function InstanceLocation.waitForChildByPath(rootInst: Instance?, path: string, timeout: number?)
+function InstanceLocator.waitForChildByPath(rootInst: Instance?, path: string, timeout: number?)
 	-- Assume the root instance is the default DataModel if no root instance is specified
 	if not rootInst then
 		rootInst = game
@@ -39,7 +39,7 @@ end
     the same as doing ReplicatedStorage:FindFirstChild("Baseplate"):FindFirstChild("Attachment0")
 ]]
 --
-function InstanceLocation.findFirstChildByPath(rootInst: Instance?, path: string)
+function InstanceLocator.findFirstChildByPath(rootInst: Instance?, path: string)
 	-- Assume the root instance is the default DataModel if no root instance is specified
 	if not rootInst then
 		rootInst = game
@@ -53,4 +53,4 @@ function InstanceLocation.findFirstChildByPath(rootInst: Instance?, path: string
 	return inst
 end
 
-return InstanceLocation
+return InstanceLocator

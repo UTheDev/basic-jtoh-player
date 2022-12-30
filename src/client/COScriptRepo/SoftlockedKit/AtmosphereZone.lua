@@ -2,19 +2,19 @@
 Client object that plays atmospheric sounds when
 the local player is in a zone
 
-By udev2192
+By udev (@UTheDev)
 ]]
 --
 
 local TWEEN_INFO = TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
 
+local RunService = game:GetService("RunService")
+
+local abs = math.abs
+local TweenGroup = require(game:GetService("ReplicatedStorage"):WaitForChild("Common"):WaitForChild("Tweening"):WaitForChild("TweenGroup"))
+
 return function(ref: ValueBase)
 	local isRunning = true
-
-	local RunService = game:GetService("RunService")
-
-	local abs = math.abs
-	local TweenGroup = require(script.Parent.Parent:WaitForChild("TweenGroup"))
 
 	--[[
 	Returns if a point in world space is inside a box
@@ -38,7 +38,7 @@ return function(ref: ValueBase)
 
 	if ref then
 		local localPlayer = game:GetService("Players").LocalPlayer
-		local tweens = TweenGroup.New()
+		local tweens = TweenGroup.new()
 		local refParent = ref.Parent
 		local sounds = {}
 		local parts = {}
@@ -68,10 +68,10 @@ return function(ref: ValueBase)
 
 		-- fades out sounds
 		local function stopSounds()
-			tweens.KillAll()
+			tweens:killAll()
 
 			for i, v in pairs(sounds) do
-				tweens.Play(
+				tweens:play(
 					v,
 					TWEEN_INFO,
 					{
@@ -87,7 +87,7 @@ return function(ref: ValueBase)
 
 		-- fades in sounds
 		local function playSounds()
-			tweens.KillAll()
+			tweens:killAll()
 
 			for i, v in pairs(sounds) do
 				if not v.IsPlaying then
@@ -95,7 +95,7 @@ return function(ref: ValueBase)
 					v:Play()
 				end
 
-				tweens.Play(v, TWEEN_INFO, {
+				tweens:play(v, TWEEN_INFO, {
 					Volume = v:GetAttribute("TargetVolume") or 1,
 				})
 			end

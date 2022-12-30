@@ -10,15 +10,15 @@ local CLIENT_OBJECT_NAME = "ClientObject"
 
 local PhysicsService = game:GetService("PhysicsService")
 
-local InstanceLocation = require(
+local InstanceLocator = require(
 	game:GetService("ReplicatedStorage")
 		:WaitForChild("Common")
 		:WaitForChild("InstanceHandling")
-		:WaitForChild("InstanceLocation")
+		:WaitForChild("InstanceLocator")
 )
 
-local clientObjectScriptRepo =
-	InstanceLocation.waitForChildByPath(game.Players.LocalPlayer, "PlayerScripts.COScriptRepo")
+local ClientObjectScriptRepo =
+	InstanceLocator.waitForChildByPath(game.Players.LocalPlayer, "PlayerScripts.COScriptRepo")
 
 local ClientObjectSession = {}
 
@@ -78,7 +78,7 @@ end
 --
 function ClientObjectSession.indexCOScriptRepo()
 	local indexTable = {}
-	for i, v in pairs(clientObjectScriptRepo:GetDescendants()) do
+	for i, v in pairs(ClientObjectScriptRepo:GetDescendants()) do
 		if v:IsA("ModuleScript") and indexTable[v.Name] == nil then
 			indexTable[v.Name] = v
 		end
@@ -226,7 +226,7 @@ end
 local function getRepoScriptFromStringValue(val: StringValue)
 	local repoModule
 	if val:GetAttribute("IsAbsolutePath") == true then
-		repoModule = InstanceLocation.findFirstChildByPath(clientObjectScriptRepo, val.Value)
+		repoModule = InstanceLocator.findFirstChildByPath(ClientObjectScriptRepo, val.Value)
 	else
 		repoModule = ClientObjectSession.scriptRepoIndex[val.Value]
 	end
@@ -273,7 +273,7 @@ function ClientObjectSession.mt:applyPart(w: Instance)
 		-- into the the corresponding ClientObject itself
 		-- for them to work
 		if w.Name == "RunRepoScript" then
-			local scr = getRepoScriptFromStringValue(w) --clientObjectScriptRepo:FindFirstChild(w.Value)
+			local scr = getRepoScriptFromStringValue(w) --ClientObjectScriptRepo:FindFirstChild(w.Value)
 			if scr then
 				scr = scr:Clone()
 				scr.Name = "RepoScript"
@@ -304,7 +304,7 @@ function ClientObjectSession.mt:applyPart(w: Instance)
 	elseif w:FindFirstChild'invisible' and w:IsA'BasePart' then
 		w.Transparency=1
 	elseif w.Name == "RunRepoScript" and w:IsA"StringValue" then
-		local scr = clientObjectScriptRepo:FindFirstChild(w.Value)
+		local scr = ClientObjectScriptRepo:FindFirstChild(w.Value)
 		if scr then
 			scr = scr:Clone()
 			scr.Name = "RepoScript"
@@ -371,7 +371,7 @@ function ClientObjectSession.mt:run()
 				if runScript then
 					self:runScript(
 						clone:FindFirstChild(CLIENT_OBJECT_NAME),
-						require(clientObjectScriptRepo:FindFirstChild(runScript))
+						require(ClientObjectScriptRepo:FindFirstChild(runScript))
 					)
 				end
 				]]
@@ -389,7 +389,7 @@ function ClientObjectSession.mt:run()
 
 			--local runScript = v:GetAttribute("RunScript")
 			--if runScript then
-			--	self:runScript(v, require(clientObjectScriptRepo:FindFirstChild(runScript)));
+			--	self:runScript(v, require(ClientObjectScriptRepo:FindFirstChild(runScript)));
 			--end
 			self:applyPart(v)
 			--end
