@@ -43,6 +43,22 @@ function InstanceCache.mt:isCached(inst: Instance)
 end
 
 --[[
+	Checks whether or not an instance can be added to the cache or removed from it.
+	This method can be checked to see if an instance has things in common to those
+	in the instance cache.
+	This method is intended to be overriden.
+
+	Parameters:
+	inst <Instance> - The instance to check
+
+	Returns:
+	<boolean> - Whether or not the instance can be cached
+]]--
+function InstanceCache.mt:canCache()
+	return true
+end
+
+--[[
     Saves a reference of an instance to the instanceList
 
     Parameters:
@@ -72,7 +88,7 @@ function InstanceCache.mt:searchByName(inst: Instance, name: string)
 	local onInitialFind = self.onInitialFind
 
 	for i, v in pairs(inst:GetDescendants()) do
-		if v.Name == name then
+		if self:canCache(v) then
 			self:cache(v)
 		end
 	end
@@ -82,14 +98,37 @@ end
     Captures any instance with a given name that has been added to a specified instance
     after the corresponding Instance.DescendantAdded connection is established
 
+	Parameters:
+	inst <Instance> - The instance to bind the Instance.DescendantAdded connection to
+
     Returns:
     <RBXScriptConnection> - The corresponding Instance.DescendantAdded connection
 ]]
 --
-function InstanceCache.mt:searchByEvent(inst: Instance, name: string)
+function InstanceCache.mt:searchByEvent(inst: Instance)
 	return inst.DescendantAdded:Connect(function(newInst: Instance)
-		if newInst.Name == name then
+		if self:canCache(inst) then
 			self:cache(newInst)
+		end
+	end)
+end
+
+--[[
+	Binds an Instance.DescendantRemoving connection to remove a particular instance from cache
+
+	Parameters:
+	inst <Instance> - The instance to bind the Instance.DescendantRemoving connection to
+
+    Returns:
+    <RBXScriptConnection> - The corresponding Instance.DescendantRemoving connection
+]]--
+function InstanceCache.mt:bindRemoval()
+	return inst.DescendantRemoving:Connect(function(inst: Instance)
+		if self:canCache(inst) then
+			local index = table.find(self.instanceCache, inst)
+			if index then
+				table.remove(self.instanceCache, index)
+			end
 		end
 	end)
 end

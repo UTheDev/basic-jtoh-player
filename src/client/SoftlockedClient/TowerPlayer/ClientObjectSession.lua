@@ -10,12 +10,23 @@ local CLIENT_OBJECT_NAME = "ClientObject"
 
 local PhysicsService = game:GetService("PhysicsService")
 
-local clientObjectScriptRepo = script.Parent:WaitForChild("ScriptRepo")
+local InstanceLocation = require(
+	game:GetService("ReplicatedStorage")
+		:WaitForChild("Common")
+		:WaitForChild("InstanceHandling")
+		:WaitForChild("InstanceLocation")
+)
+
+local clientObjectScriptRepo =
+	InstanceLocation.waitForChildByPath(game.Players.LocalPlayer, "PlayerScripts.COScriptRepo")
 
 local ClientObjectSession = {}
 
 ClientObjectSession.mt = {}
 ClientObjectSession.mt.__index = ClientObjectSession.mt
+
+-- script repository indexing
+ClientObjectSession.scriptRepoIndex = {}
 
 -- constructor
 function ClientObjectSession.new(clientObjectFolder: Folder, coFolderParent: Instance)
@@ -61,6 +72,21 @@ function ClientObjectSession.stopClientObject(runningObject: {})
 	end
 end
 
+--[[
+	Performs indexing of the ClientObject script repository, COScriptRepo
+]]
+--
+function ClientObjectSession.indexCOScriptRepo()
+	local indexTable = {}
+	for i, v in pairs(clientObjectScriptRepo:GetDescendants()) do
+		if v:IsA("ModuleScript") and indexTable[v.Name] == nil then
+			indexTable[v.Name] = v
+		end
+	end
+
+	ClientObjectSession.scriptRepoIndex = indexTable
+end
+
 ----- legacy LocalPartScript button code -----
 --all of the code below here is no longer used in new buttons but there for compatibility's sake
 local function CheckColor3(color)
@@ -68,7 +94,8 @@ local function CheckColor3(color)
 	return pcall(function()
 		local yeet = color:lerp(Color3.new(), 1)
 	end)
-	]]--
+	]]
+	--
 	return typeof(color) == "Color3"
 end
 local function GetAllButtons(color)
@@ -196,6 +223,21 @@ function ClientObjectSession.mt:runScript(coValue: ValueBase?, coFunc: (ref: Val
 	end)
 end
 
+local function getRepoScriptFromStringValue(val: StringValue)
+	local repoModule
+	if val:GetAttribute("IsAbsolutePath") == true then
+		repoModule = InstanceLocation.findFirstChildByPath(clientObjectScriptRepo, val.Value)
+	else
+		repoModule = ClientObjectSession.scriptRepoIndex[val.Value]
+	end
+
+	if repoModule and repoModule:IsA("ModuleScript") then
+		return repoModule
+	else
+		return nil
+	end
+end
+
 --[[
 Applies CO behavior to the instance specified
 
@@ -231,7 +273,7 @@ function ClientObjectSession.mt:applyPart(w: Instance)
 		-- into the the corresponding ClientObject itself
 		-- for them to work
 		if w.Name == "RunRepoScript" then
-			local scr = clientObjectScriptRepo:FindFirstChild(w.Value)
+			local scr = getRepoScriptFromStringValue(w) --clientObjectScriptRepo:FindFirstChild(w.Value)
 			if scr then
 				scr = scr:Clone()
 				scr.Name = "RepoScript"
@@ -240,7 +282,7 @@ function ClientObjectSession.mt:applyPart(w: Instance)
 				self:runScript(w, require(scr))
 			end
 		elseif w.Name == "ReferenceCOScript" then
-			local scr = clientObjectScriptRepo:FindFirstChild(w.Value)
+			local scr = getRepoScriptFromStringValue(w)
 			if scr then
 				-- for ClientObjectScripts that use a reference
 				-- ValueBase to locate the object they act on
@@ -411,5 +453,8 @@ function ClientObjectSession.mt:stop()
 		self.coClones = {}
 	end
 end
+
+-- run initial indexing of the client object script repo
+ClientObjectSession.indexCOScriptRepo()
 
 return ClientObjectSession

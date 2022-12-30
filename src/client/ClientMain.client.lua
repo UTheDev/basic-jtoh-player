@@ -1,5 +1,7 @@
 --[[
 Runs the tower player
+
+By udev (@UTheDev)
 ]]
 --
 
@@ -9,9 +11,12 @@ local TextChatService = game:GetService("TextChatService")
 
 local client = script.Parent
 
-local ClientPackages = client:WaitForChild("ClientPackages")
 local Common = ReplicatedStorage:WaitForChild("Common")
-local TowerPlayer = ClientPackages:WaitForChild("TowerPlayer")
+
+local JToHKitClient = client:WaitForChild("JToHKitClient")
+
+local SoftlockedClient = client:WaitForChild("SoftlockedClient")
+local TowerPlayer = SoftlockedClient:WaitForChild("TowerPlayer")
 
 local GameStats = require(Common:WaitForChild("Info"):WaitForChild("GameStats"))
 
@@ -113,10 +118,10 @@ ReplicatedStorage:WaitForChild("Remote"):WaitForChild("OnTowerWin").OnClientEven
 end)
 
 -- player physics
-task.spawn(require(ClientPackages:WaitForChild("LocalPartScriptPhysics")))
+task.spawn(require(JToHKitClient:WaitForChild("LocalPartScriptPhysics")))
 
 -- music
-task.spawn(require(ClientPackages:WaitForChild("NewMusicScript")))
+task.spawn(require(JToHKitClient:WaitForChild("NewMusicScript")))
 
 -- tower portal setup
 local isTouchingPortal = false

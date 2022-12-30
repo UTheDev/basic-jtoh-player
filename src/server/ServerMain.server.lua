@@ -5,10 +5,10 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 
 local Remote = ReplicatedStorage:WaitForChild("Remote")
-local ServerPackages = script.Parent:WaitForChild("ServerPackages")
+local SoftlockedServer = script.Parent:WaitForChild("SoftlockedServer")
 
-local RemoteCooldown = require(ServerPackages:WaitForChild("RemoteCooldown"))
-local TowerSession = require(ServerPackages:WaitForChild("TowerSession"))
+local RemoteCooldown = require(SoftlockedServer:WaitForChild("RemoteCooldown"))
+local TowerSession = require(SoftlockedServer:WaitForChild("TowerSession"))
 
 -- put the towers into replicated storage for canister mode
 local Towers = workspace:WaitForChild("Towers")
