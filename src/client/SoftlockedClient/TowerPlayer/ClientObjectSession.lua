@@ -25,7 +25,9 @@ local ClientObjectSession = {}
 ClientObjectSession.mt = {}
 ClientObjectSession.mt.__index = ClientObjectSession.mt
 
--- script repository indexing
+--[[
+	An index of the script repository for quick referencing
+]]--
 ClientObjectSession.scriptRepoIndex = {}
 
 -- constructor
@@ -53,6 +55,9 @@ function ClientObjectSession.new(clientObjectFolder: Folder, coFolderParent: Ins
 	return setmetatable(self, ClientObjectSession.mt)
 end
 
+--[[
+	@return Whether or not the object represented by "obj" is a ClientObject value
+]]--
 function ClientObjectSession.isClientObjectValue(obj: Instance)
 	return obj.Name == CLIENT_OBJECT_NAME and obj:IsA("ValueBase")
 end
@@ -60,11 +65,10 @@ end
 --[[
 Stops the script for a specified client object table
 
-Params:
-runningObject <{}> - the table
+@param runningObject The client object table
 ]]
 --
-function ClientObjectSession.stopClientObject(runningObject: {})
+function ClientObjectSession.stopClientObject(runningObject: {stop: () -> ()?})
 	local f = runningObject.stop
 
 	if typeof(f) == "function" then
@@ -137,6 +141,8 @@ mt.__call = function(t, mode, val, color)
 			b.Pressed.Value = val
 		end
 	end
+
+	return nil
 end
 
 _G.Buttons = setmetatable({}, mt)
@@ -197,15 +203,15 @@ end
 --[[
 Runs the script for a client object
 
-Params:
-coValue <ValueBase> - A reference to the ValueBase calling the function if applicable
-coFunc <function> - The function returned by the client object
-	The coFunc will have 2 arguments passed to it:
-	ref <ValueBase> - Whatever was passed into the coValue parameter
-	coSession <{}> - The current ClientObjectSession
+@param coValue A reference to the ValueBase calling the function if applicable
+@param coFunc The function returned by the client object
+
+The callback represented by coFunc will have 2 arguments passed to it:
+ref <ValueBase> - Whatever was passed into the coValue parameter
+coSession <{}> - The current ClientObjectSession
 ]]
 --
-function ClientObjectSession.mt:runScript(coValue: ValueBase?, coFunc: (ref: ValueBase, coSession: {}) -> ({}?))
+function ClientObjectSession.mt:runScript(coValue: ValueBase?, coFunc: (ref: ValueBase?, coSession: {}) -> ({}?))
 	-- run the function
 	task.spawn(function()
 		local result = coFunc(coValue, self)
@@ -241,7 +247,7 @@ end
 --[[
 Applies CO behavior to the instance specified
 
-w <Instance> - The instance to apply to
+@param w The instance to apply the behavior to
 ]]
 --
 function ClientObjectSession.mt:applyPart(w: Instance)

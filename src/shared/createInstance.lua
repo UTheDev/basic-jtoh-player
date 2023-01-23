@@ -2,7 +2,7 @@
 Shortened way for developers to quickly create instances
 ]]--
 
-local function createInstance(className: string, properties: {[string]: name}?, children: {Instance}?)
+local function createInstance(className: string, properties: {[string]: any}?, children: {Instance}?)
     local newInst = Instance.new(className)
 
     if properties then
