@@ -253,7 +253,7 @@ function ClientTowerPlayer:play(towerId: string)
 			warn("Failed to start tower: " .. tostring(result))
 		end
 	else
-		warn("Could not play " + towerId + " because it hasn't been registered by this instance of ClientTowerPlayer.")
+		warn("Could not play " .. towerId .. " because it hasn't been registered by this instance of ClientTowerPlayer.")
 	end
 end
 
