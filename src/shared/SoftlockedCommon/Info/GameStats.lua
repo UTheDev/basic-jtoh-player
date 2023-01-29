@@ -1,29 +1,45 @@
+--[[
+	This module describes some game statistics about JToH related games (e.g. difficulties).
+]]
+--
 local GameStats = {}
+
+--[[
+	Represents a single difficulty
+]]
+--
+export type Difficulty = {
+	index: number,
+	name: string?,
+	color: Color3?,
+}
 
 --[[
 Creates a difficulty info table
 
-Params:
-Index <number> - The index of the difficulty to use as an identifier
-Name <string?> - The name of the difficulty
-Color <Color3?> - The difficulty's color
+@param index The index of the difficulty to use as an identifier
+@param name The name of the difficulty
+@param color The difficulty's color
 
-Returns:
-<table> - The created difficulty info table
-]]--
-function GameStats.createDifficulty(Index: number, Name: string?, Color: Color3?)
-	assert(typeof(Index) == "number", "Argument 1 must be a number")
-	assert(Name == nil or typeof(Name) == "string", "Argument 2 must be a string or nil")
-	assert(Color == nil or typeof(Color) == "Color3", "Argument 3 must be a Color3")
+@return The created difficulty info table
+]]
+--
+function GameStats.createDifficulty(index: number, name: string?, color: Color3?): Difficulty
+	assert(typeof(index) == "number", "Argument 1 must be a number")
+	assert(name == nil or typeof(name) == "string", "Argument 2 must be a string or nil")
+	assert(color == nil or typeof(color) == "Color3", "Argument 3 must be a Color3")
 
 	return {
-		Index = Index,
-		Name = Name or "n/a",
-		Color = Color or Color3.fromRGB(128, 128, 128)
+		index = index,
+		name = name or "n/a",
+		color = color or Color3.fromRGB(128, 128, 128),
 	}
 end
 
--- Credit to Juke's Towers of Hell for the assortment of difficulty rankings
+--[[
+	The assortment of difficuties as defined by the Juke's Towers of Hell community.
+]]
+--
 GameStats.difficulties = {
 	-- tower game difficulties, as of February 2022
 	GameStats.createDifficulty(1, "Easy", Color3.fromRGB(118, 244, 71)),

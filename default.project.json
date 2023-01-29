@@ -5,11 +5,6 @@
     "$ignoreUnknownInstances": true,
 
     "ReplicatedStorage": {
-      "Common": {
-        "$path": "src/shared",
-        "$ignoreUnknownInstances": true
-      },
-
       "Remote": {
         "$className": "Folder",
 
@@ -24,12 +19,23 @@
         "StopTower": {
           "$className": "RemoteFunction"
         }
-      }
-    },
+      },
 
-    "ServerScriptService": {
-      "$path": "src/server",
-      "$ignoreUnknownInstances": true
+      "Roact": {
+        "$path": "src/shared/Roact"
+      },
+
+      "createInstance": {
+        "$path": "src/shared/createInstance.lua"
+      },
+
+      "Signal": {
+        "$path": "src/shared/Signal.lua"
+      },
+
+      "SoftlockedCommon": {
+        "$path": "src/shared/SoftlockedCommon"
+      }
     },
 
     "StarterGui": {
@@ -38,13 +44,31 @@
     },
 
     "StarterPlayer": {
-      "StarterPlayerScripts": {
-        "$path": "src/client",
+      "StarterCharacterScripts": {
+        "$path": "src/character",
         "$ignoreUnknownInstances": true
       },
 
-      "StarterCharacterScripts": {
-        "$path": "src/character",
+      "StarterPlayerScripts": {
+        "SoftlockedClient": {
+          "$path": "src/client"
+        },
+
+        "PlayerModule": {
+          "$path": "src/PlayerModule"
+        }
+      }
+    },
+
+    "ServerScriptService": {
+      "SoftlockedServer": {
+        "$path": "src/server"
+      }
+    },
+
+    "ServerStorage": {
+      "Archive": {
+        "$className": "Folder",
         "$ignoreUnknownInstances": true
       }
     },
@@ -52,6 +76,16 @@
     "Workspace": {
       "$properties": {
         "FilteringEnabled": true
+      },
+
+      "Levels": {
+        "$className": "Folder",
+        "$ignoreUnknownInstances": true
+      },
+
+      "Winrooms": {
+        "$className": "Folder",
+        "$ignoreUnknownInstances": true
       }
     },
 
