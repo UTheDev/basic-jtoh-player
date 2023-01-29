@@ -1,5 +1,5 @@
 # softlocked
-This is a basic system for running obbies in the Juke's Towers of Hell format that I made in my spare time.
+This is a basic system for running obbies in the [Juke's Towers of Hell](https://www.roblox.com/games/8562822414/Jukes-Towers-of-Hell) format that I made in my spare time.
 It's nothing fancy, but it gets the job done with a few extra additions to what came with the Juke's Towers of Hell kit.
 
 The goal of this project is to make an optimized codebase that can be used for JToH fangames and games alike.
