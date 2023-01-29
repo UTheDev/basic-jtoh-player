@@ -21,20 +21,16 @@
         }
       },
 
-      "Roact": {
-        "$path": "src/shared/Roact"
-      },
-
       "createInstance": {
         "$path": "src/shared/createInstance.lua"
       },
 
       "Signal": {
-        "$path": "src/shared/Signal.lua"
+        "$path": "lib/Signal.lua"
       },
 
-      "SoftlockedCommon": {
-        "$path": "src/shared/SoftlockedCommon"
+      "Softlocked": {
+        "$path": "src/shared"
       }
     },
 
@@ -50,19 +46,44 @@
       },
 
       "StarterPlayerScripts": {
-        "SoftlockedClient": {
+        "COScriptRepo": {
+          "$className": "Folder",
+          "$ignoreUnknownInstances": true,
+
+          "JToH": {
+            "$path": "lib/JToH/clientObjects"
+          },
+
+          "Softlocked": {
+            "$path": "src/clientObjects"
+          }
+        },
+
+        "Softlocked": {
           "$path": "src/client"
         },
 
         "PlayerModule": {
-          "$path": "src/PlayerModule"
+          "$path": "lib/PlayerModule"
         }
       }
     },
 
     "ServerScriptService": {
-      "SoftlockedServer": {
-        "$path": "src/server"
+      "Softlocked": {
+        "$path": "src/server/Softlocked"
+      },
+
+      "ServerMain": {
+        "$path": "src/server/ServerMain.server.lua"
+      },
+
+      "JToH": {
+        "$path": "lib/JToH/server"
+      },
+
+      "StudioNoclip": {
+        "$path": "src/server/StudioNoclip"
       }
     },
 
