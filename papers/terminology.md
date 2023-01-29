@@ -1,3 +1,3 @@
 # Softlocked Terminology
 Here are a few definitions for the coding of Softlocked, just to prevent some confusion. These are not meant to replace standard definitions of commonly used words such as "level," and therefore, such words are mainly intended as synonyms specific to Softlocked and similar games like Juke's Towers of Hell. Please note that I plan on updating this list.
-- Level: The base class for many maps implemented in the Softlocked API (e.g. Rooms, Towers, Winrooms).
+- Level: The base class for many maps implemented by Softlocked (e.g. Rooms, Towers, Winrooms).
