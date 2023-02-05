@@ -4,7 +4,7 @@ GUI that displays how long a current tower session has been active
 --
 
 local createInstance =
-	require(game:GetService("ReplicatedStorage"):WaitForChild("Common"):WaitForChild("createInstance"))
+	require(game:GetService("ReplicatedStorage"):WaitForChild("Softlocked"):WaitForChild("createInstance"))
 
 local TimerFrame = {}
 TimerFrame.mt = {}
@@ -95,7 +95,7 @@ function TimerFrame.mt:updateTime(newSeconds: number)
 	end
 end
 
-function TimerFrame.mt:onTowerChange(newTower: {})
+function TimerFrame.mt:onTowerChange(newTower: {id: string})
 	if newTower then
 		self:rename(newTower.id)
 	else
@@ -118,7 +118,7 @@ function TimerFrame.mt:unbindPlayer()
 	end
 end
 
-function TimerFrame.mt:bindPlayer(towerPlr: {})
+function TimerFrame.mt:bindPlayer(towerPlr)
 	if self.timeChangeConnection == nil then
 		self.timeChangeConnection = towerPlr.onCurrentTimeChange:Connect(function(newTime)
 			self:updateTime(newTime)

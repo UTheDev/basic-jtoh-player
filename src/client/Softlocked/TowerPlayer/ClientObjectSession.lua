@@ -12,7 +12,7 @@ local PhysicsService = game:GetService("PhysicsService")
 
 local InstanceLocator = require(
 	game:GetService("ReplicatedStorage")
-		:WaitForChild("Common")
+		:WaitForChild("Softlocked")
 		:WaitForChild("InstanceHandling")
 		:WaitForChild("InstanceLocator")
 )
@@ -20,6 +20,11 @@ local InstanceLocator = require(
 local ClientObjectScriptRepo =
 	InstanceLocator.waitForChildByPath(game.Players.LocalPlayer, "PlayerScripts.COScriptRepo")
 
+--[[
+	This class is responsible for running a folder full of client objects.
+	
+	Each time they're actually running, the client object running session is considered to be "active".
+]]--
 local ClientObjectSession = {}
 
 ClientObjectSession.mt = {}
@@ -30,7 +35,9 @@ ClientObjectSession.mt.__index = ClientObjectSession.mt
 ]]--
 ClientObjectSession.scriptRepoIndex = {}
 
--- constructor
+--[[
+	Creates a new ClientObjectSession runner
+]]--
 function ClientObjectSession.new(clientObjectFolder: Folder, coFolderParent: Instance)
 	local self = {}
 

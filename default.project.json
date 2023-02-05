@@ -83,7 +83,7 @@
       },
 
       "StudioNoclip": {
-        "$path": "src/server/StudioNoclip"
+        "$path": "src/server/StudioNoclip.server.lua"
       }
     },
 
