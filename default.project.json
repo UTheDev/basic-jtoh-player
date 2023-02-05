@@ -1,5 +1,5 @@
 {
-  "name": "softlocked",
+  "name": "softlocked-jtoh",
   "tree": {
     "$className": "DataModel",
     "$ignoreUnknownInstances": true,
