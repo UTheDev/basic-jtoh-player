@@ -1,45 +1,47 @@
 --[[
-Runs the tower player
+Runs the level player
 
-By udev (@UTheDev)
+By udev (UTheDev)
 ]]
 --
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local StarterGui = game:GetService("StarterGui")
-local TextChatService = game:GetService("TextChatService")
+--local StarterGui = game:GetService("StarterGui")
+--local TextChatService = game:GetService("TextChatService")
 
 local client = script.Parent
 
-local Common = ReplicatedStorage:WaitForChild("Common")
+local SoftlockedReplicated = ReplicatedStorage:WaitForChild("Softlocked")
 
 local JToHKitClient = client:WaitForChild("JToHKitClient")
 
-local SoftlockedClient = client:WaitForChild("SoftlockedClient")
-local TowerPlayer = SoftlockedClient:WaitForChild("TowerPlayer")
+local SoftlockedClient = script.Parent
+local LevelPlayer = SoftlockedClient:WaitForChild("LevelPlayer")
 
-local GameStats = require(Common:WaitForChild("Info"):WaitForChild("GameStats"))
+--local GameStats = require(SoftlockedReplicated:WaitForChild("Info"):WaitForChild("GameStats"))
 
-local ClientTowerPlayer = require(TowerPlayer:WaitForChild("ClientTowerPlayer"))
-local ClientObjectSession = require(TowerPlayer:WaitForChild("ClientObjectSession"))
-local TimerFrame = require(TowerPlayer:WaitForChild("TimerFrame"))
+local WinReceiver = require(LevelPlayer:WaitForChild("WinReceiver"))
 
-local createInstance = require(Common:WaitForChild("createInstance"))
+local ClientLevelPlayer = require(LevelPlayer:WaitForChild("ClientLevelPlayer"))
+local ClientObjectSession = require(LevelPlayer:WaitForChild("ClientObjectSession"))
+local TimerFrame = require(LevelPlayer:WaitForChild("TimerFrame"))
+
+local createInstance = require(SoftlockedReplicated:WaitForChild("createInstance"))
 
 local localPlayer = game:GetService("Players").LocalPlayer
 
-local portals = workspace:WaitForChild("Portals")
+--local portals = workspace:WaitForChild("Portals")
 
-local towers = ReplicatedStorage:WaitForChild("Towers")
+local levels = ReplicatedStorage:WaitForChild("Levels")
 
 local mainGui = createInstance("ScreenGui", {
 	Name = "mainGui",
 
 	IgnoreGuiInset = true,
 	ResetOnSpawn = false,
-	ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 })
-local mainTowerPlayer = ClientTowerPlayer.new()
+local mainLevelPlayer = ClientLevelPlayer.new()
 local mainTimerFrame = TimerFrame.new()
 
 local lobbyCOs = workspace:WaitForChild("Lobby"):WaitForChild("ClientSidedObjects")
@@ -47,75 +49,12 @@ local lobbyCOSession = ClientObjectSession.new(lobbyCOs, lobbyCOs.Parent)
 lobbyCOs.Parent = nil
 
 -- do initial setup for the towers
-for i, v in pairs(towers:GetChildren()) do
-	mainTowerPlayer:register(v)
+for i, v in pairs(levels:GetChildren()) do
+	mainLevelPlayer:register(v)
 end
 
 -- connect timer to tower player
-mainTimerFrame:bindPlayer(mainTowerPlayer)
-
--- tower win display
--- reminder that win time is in seconds
-ReplicatedStorage:WaitForChild("Remote"):WaitForChild("OnTowerWin").OnClientEvent:Connect(function(player: Player, towerId: string, winTime: number)
-	if not (typeof(player) == "Instance" and player:IsA("Player")) then
-		warn("Invalid player")
-		return
-	end
-	
-	if typeof(towerId) ~= "string" then
-		warn("towerId must be a string")
-		return
-	end
-	
-	if typeof(winTime) ~= "number" then
-		warn("winTime must be a number")
-		return
-	end
-	
-	local tower = towers:FindFirstChild(towerId)
-	if not tower then
-		warn("Cannot display win for", towerId, "because it doesn't exist")
-		return
-	end
-	
-	local metadata = require(tower:WaitForChild("Metadata"))
-	local difficulty = GameStats.difficulties[metadata.difficulty]
-	if not difficulty then
-		warn("Cannot display win because the difficulty for", towerId, "is invalid")
-		return
-	end
-
-	local winText = "[SERVER]: "
-	.. player.Name .. " has beaten " .. metadata.fullName
-	.. " in " .. TimerFrame.formatTime(winTime / 1000)
-	local color = difficulty.Color
-	
-	local success, result = pcall(function()
-		-- new chat system (TextChatService)
-		local rbxSystemChannel = TextChatService:FindFirstChild("TextChannels")
-		if rbxSystemChannel then
-			rbxSystemChannel = rbxSystemChannel:FindFirstChild("RBXSystem")
-
-			if rbxSystemChannel then
-				rbxSystemChannel:DisplaySystemMessage(
-					"<font color='#" .. color:ToHex() .. "'>" .. winText .. "</font>"
-				)
-
-				return
-			end
-		end
-
-		-- old chat system
-		StarterGui:SetCore("ChatMakeSystemMessage", {
-			Text = winText,
-			Color = color
-		})
-	end)
-	
-	if not success then
-		warn("Tower win display failed.\nError: " .. tostring(result) .. "\nOriginal message: " .. winText)
-	end
-end)
+mainTimerFrame:bindPlayer(mainLevelPlayer)
 
 -- player physics
 task.spawn(require(JToHKitClient:WaitForChild("LocalPartScriptPhysics")))
@@ -139,7 +78,7 @@ for i, v in pairs(workspace:WaitForChild("Portals"):GetChildren()) do
 
 					-- corresponding tower id is read from the
 					-- name of the portal's model
-					mainTowerPlayer:play(v.Name)
+					mainLevelPlayer:play(v.Name)
 
 					isTouchingPortal = false
 				end
@@ -150,8 +89,12 @@ for i, v in pairs(workspace:WaitForChild("Portals"):GetChildren()) do
 	end
 end
 
-local function onCharSpawn(char: Model)
-	mainTowerPlayer:stop()
+-- listen to wins
+WinReceiver.new(ReplicatedStorage:WaitForChild("Softlocked"):WaitForChild("Remote"):WaitForChild("OnPlayerWin"), levels)
+	:connect()
+
+local function onCharSpawn()
+	mainLevelPlayer:stop()
 	mainTimerFrame:updateTime(0)
 	mainTimerFrame:rename("---")
 
@@ -167,5 +110,5 @@ localPlayer.CharacterAdded:Connect(onCharSpawn)
 --mainTimerFrame.component.Visible = true
 mainTimerFrame.element.Parent = mainGui
 mainGui.Parent = localPlayer:WaitForChild("PlayerGui")
-towers.Parent = workspace
+levels.Parent = workspace
 lobbyCOSession:run()

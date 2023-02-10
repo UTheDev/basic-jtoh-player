@@ -1,28 +1,20 @@
 {
-  "name": "softlocked-jtoh",
+  "name": "softlocked-v2",
   "tree": {
     "$className": "DataModel",
     "$ignoreUnknownInstances": true,
 
     "ReplicatedStorage": {
-      "Remote": {
-        "$className": "Folder",
-
-        "OnTowerWin": {
-          "$className": "RemoteEvent"
-        },
-        
-        "RequestTower": {
-          "$className": "RemoteFunction"
-        },
-
-        "StopTower": {
-          "$className": "RemoteFunction"
-        }
+      "DamageEvent": {
+        "$className": "RemoteEvent"
       },
 
       "createInstance": {
         "$path": "src/shared/createInstance.lua"
+      },
+
+      "Roact": {
+        "$path": "lib/Roact"
       },
 
       "Signal": {
@@ -30,7 +22,23 @@
       },
 
       "Softlocked": {
-        "$path": "src/shared"
+        "$path": "src/shared",
+
+        "Remote": {
+          "$className": "Folder",
+  
+          "OnPlayerWin": {
+            "$className": "RemoteEvent"
+          },
+          
+          "RequestLevel": {
+            "$className": "RemoteFunction"
+          },
+  
+          "StopLevel": {
+            "$className": "RemoteFunction"
+          }
+        }
       }
     },
 
@@ -71,19 +79,11 @@
 
     "ServerScriptService": {
       "Softlocked": {
-        "$path": "src/server/Softlocked"
-      },
-
-      "ServerMain": {
-        "$path": "src/server/ServerMain.server.lua"
+        "$path": "src/server"
       },
 
       "JToH": {
         "$path": "lib/JToH/server"
-      },
-
-      "StudioNoclip": {
-        "$path": "src/server/StudioNoclip.server.lua"
       }
     },
 
