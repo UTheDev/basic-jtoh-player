@@ -1,4 +1,5 @@
 # softlocked-v2
+This is a planned update to the [original Softlocked](https://www.github.com/uthedev/softlocked) intended to make it easier to work with as well as more optimized.
 
 This is a basic system for running obbies in the [Juke's Towers of Hell](https://www.roblox.com/games/8562822414/Jukes-Towers-of-Hell) format that I made in my spare time.
 It's nothing fancy, but it gets the job done with a few extra additions to what came with the Juke's Towers of Hell kit.
