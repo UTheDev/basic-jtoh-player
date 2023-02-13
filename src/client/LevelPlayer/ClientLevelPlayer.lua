@@ -5,7 +5,7 @@ Runs levels on the client
 
 local CHAR_SPAWN_HEIGHT = 5
 
-local ClientObjectSession = require(script.Parent:WaitForChild("ClientObjectSession"))
+local ClientObjectPlayer = require(script.Parent:WaitForChild("ClientObjectPlayer"))
 local Signal = require(game:GetService("ReplicatedStorage"):WaitForChild("Signal"))
 
 local localPlayer = game:GetService("Players").LocalPlayer
@@ -82,7 +82,7 @@ function ClientLevelPlayer:register(levelInst: Instance)
 	levelStore.model = levelInst
 
 	if coFolder then
-		levelStore.coSession = ClientObjectSession.new(coFolder, coFolder.Parent)
+		levelStore.coSession = ClientObjectPlayer.new(coFolder, coFolder.Parent)
 	end
 
 	table.insert(self.levels, levelStore)
@@ -252,7 +252,9 @@ function ClientLevelPlayer:play(levelId: string)
 			warn("Failed to start level: " .. tostring(result))
 		end
 	else
-		warn("Could not play " .. levelId .. " because it hasn't been registered by this instance of ClientLevelPlayer.")
+		warn(
+			"Could not play " .. levelId .. " because it hasn't been registered by this instance of ClientLevelPlayer."
+		)
 	end
 end
 

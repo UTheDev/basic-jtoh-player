@@ -23,7 +23,7 @@ local LevelPlayer = SoftlockedClient:WaitForChild("LevelPlayer")
 local WinReceiver = require(LevelPlayer:WaitForChild("WinReceiver"))
 
 local ClientLevelPlayer = require(LevelPlayer:WaitForChild("ClientLevelPlayer"))
-local ClientObjectSession = require(LevelPlayer:WaitForChild("ClientObjectSession"))
+local ClientObjectPlayer = require(LevelPlayer:WaitForChild("ClientObjectPlayer"))
 local TimerFrame = require(LevelPlayer:WaitForChild("TimerFrame"))
 
 local createInstance = require(SoftlockedReplicated:WaitForChild("createInstance"))
@@ -45,7 +45,7 @@ local mainLevelPlayer = ClientLevelPlayer.new()
 local mainTimerFrame = TimerFrame.new()
 
 local lobbyCOs = workspace:WaitForChild("Lobby"):WaitForChild("ClientSidedObjects")
-local lobbyCOSession = ClientObjectSession.new(lobbyCOs, lobbyCOs.Parent)
+local lobbyCOSession = ClientObjectPlayer.new(lobbyCOs, lobbyCOs.Parent)
 lobbyCOs.Parent = nil
 
 -- do initial setup for the towers

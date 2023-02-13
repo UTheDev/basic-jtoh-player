@@ -1,6 +1,6 @@
 local CHAR_SPAWN_HEIGHT = 5
 
-local ClientObjectSession = require(script.Parent.Parent:WaitForChild("ClientObjectSession"))
+local ClientObjectPlayer = require(script.Parent.Parent:WaitForChild("ClientObjectPlayer"))
 
 --[[
     Represents a single level in the Juke's Towers of Hell tower format
@@ -32,7 +32,7 @@ function Level.new(model: Instance)
 	self.isPlaying = false
 
 	if coFolder then
-		self.coSession = ClientObjectSession.new(coFolder, coFolder.Parent)
+		self.coSession = ClientObjectPlayer.new(coFolder, coFolder.Parent)
 	end
 
 	return self

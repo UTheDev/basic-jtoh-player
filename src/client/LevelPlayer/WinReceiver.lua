@@ -1,10 +1,5 @@
 -- By udev (UTheDev)
 
---[[
-    For the client, this displays level wins in chat
-]]
---
-
 local GameStats = require(
 	game:GetService("ReplicatedStorage"):WaitForChild("Softlocked"):WaitForChild("Info"):WaitForChild("GameStats")
 )
@@ -14,6 +9,12 @@ local TextChatService = game:GetService("TextChatService")
 
 local TimerFrame = require(script.Parent:WaitForChild("TimerFrame"))
 
+--[[
+    For the client, this displays level wins in chat
+
+	@class WinReceiver
+]]
+--
 local WinReceiver = {}
 WinReceiver.__index = WinReceiver
 
