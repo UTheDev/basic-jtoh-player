@@ -4,11 +4,11 @@ local ServerStorage = game:GetService("ServerStorage")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 
-local Remote = ReplicatedStorage:WaitForChild("Softlocked"):WaitForChild("Remote")
-local SoftlockedServer = script.Parent
+local Remote = ReplicatedStorage:WaitForChild("BasicJToHPlayer"):WaitForChild("Remote")
+local BasicJToHServer = script.Parent
 
-local RemoteCooldown = require(SoftlockedServer:WaitForChild("RemoteCooldown"))
-local LevelSession = require(SoftlockedServer:WaitForChild("LevelSession"))
+local RemoteCooldown = require(BasicJToHServer:WaitForChild("RemoteCooldown"))
+local LevelSession = require(BasicJToHServer:WaitForChild("LevelSession"))
 
 -- put the levels into replicated storage for canister mode
 local Levels = workspace:WaitForChild("Levels")

@@ -1,7 +1,7 @@
 -- By udev (UTheDev)
 
 local GameStats = require(
-	game:GetService("ReplicatedStorage"):WaitForChild("Softlocked"):WaitForChild("Info"):WaitForChild("GameStats")
+	game:GetService("ReplicatedStorage"):WaitForChild("BasicJToHPlayer"):WaitForChild("Info"):WaitForChild("GameStats")
 )
 
 local StarterGui = game:GetService("StarterGui")

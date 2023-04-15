@@ -4,7 +4,7 @@ GUI that displays how long a current level session has been active
 --
 
 local createInstance =
-	require(game:GetService("ReplicatedStorage"):WaitForChild("Softlocked"):WaitForChild("createInstance"))
+	require(game:GetService("ReplicatedStorage"):WaitForChild("BasicJToHPlayer"):WaitForChild("createInstance"))
 
 local TimerFrame = {}
 TimerFrame.mt = {}

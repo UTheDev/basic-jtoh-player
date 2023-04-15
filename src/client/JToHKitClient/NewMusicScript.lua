@@ -15,7 +15,7 @@ return function()
 
 	-- MODIFICATION: Create the MuteButtonGui here
 	local createInstance =
-		require(game:GetService("ReplicatedStorage"):WaitForChild("Softlocked"):WaitForChild("createInstance"))
+		require(game:GetService("ReplicatedStorage"):WaitForChild("BasicJToHPlayer"):WaitForChild("createInstance"))
 	--local mutebutton = script:WaitForChild("MuteButtonGui")
 	local mutebutton = createInstance("ScreenGui", {
 		Name = "MuteButtonGui",

@@ -11,14 +11,14 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local client = script.Parent
 
-local SoftlockedReplicated = ReplicatedStorage:WaitForChild("Softlocked")
+local BasicJToHReplicated = ReplicatedStorage:WaitForChild("BasicJToHPlayer")
 
 local JToHKitClient = client:WaitForChild("JToHKitClient")
 
-local SoftlockedClient = script.Parent
-local LevelPlayer = SoftlockedClient:WaitForChild("LevelPlayer")
+local BasicJToHClient = script.Parent
+local LevelPlayer = BasicJToHClient:WaitForChild("LevelPlayer")
 
---local GameStats = require(SoftlockedReplicated:WaitForChild("Info"):WaitForChild("GameStats"))
+--local GameStats = require(BasicJToHReplicated:WaitForChild("Info"):WaitForChild("GameStats"))
 
 local WinReceiver = require(LevelPlayer:WaitForChild("WinReceiver"))
 
@@ -26,7 +26,7 @@ local ClientLevelPlayer = require(LevelPlayer:WaitForChild("ClientLevelPlayer"))
 local ClientObjectPlayer = require(LevelPlayer:WaitForChild("ClientObjectPlayer"))
 local TimerFrame = require(LevelPlayer:WaitForChild("TimerFrame"))
 
-local createInstance = require(SoftlockedReplicated:WaitForChild("createInstance"))
+local createInstance = require(BasicJToHReplicated:WaitForChild("createInstance"))
 
 local localPlayer = game:GetService("Players").LocalPlayer
 
@@ -90,7 +90,7 @@ for i, v in pairs(workspace:WaitForChild("Portals"):GetChildren()) do
 end
 
 -- listen to wins
-WinReceiver.new(ReplicatedStorage:WaitForChild("Softlocked"):WaitForChild("Remote"):WaitForChild("OnPlayerWin"), levels)
+WinReceiver.new(ReplicatedStorage:WaitForChild("BasicJToHPlayer"):WaitForChild("Remote"):WaitForChild("OnPlayerWin"), levels)
 	:connect()
 
 local function onCharSpawn()

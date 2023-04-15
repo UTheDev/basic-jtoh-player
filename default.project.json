@@ -1,5 +1,5 @@
 {
-  "name": "softlocked-v2",
+  "name": "basic-jtoh-player",
   "tree": {
     "$className": "DataModel",
     "$ignoreUnknownInstances": true,
@@ -21,7 +21,7 @@
         "$path": "lib/Signal.lua"
       },
 
-      "Softlocked": {
+      "BasicJToHPlayer": {
         "$path": "src/shared",
 
         "Remote": {
@@ -62,12 +62,12 @@
             "$path": "lib/JToH/clientObjects"
           },
 
-          "Softlocked": {
+          "BasicJToHPlayer": {
             "$path": "src/clientObjects"
           }
         },
 
-        "Softlocked": {
+        "BasicJToHPlayer": {
           "$path": "src/client"
         },
 
@@ -78,7 +78,7 @@
     },
 
     "ServerScriptService": {
-      "Softlocked": {
+      "BasicJToHPlayer": {
         "$path": "src/server"
       },
 

@@ -30,7 +30,7 @@ end
 -- constructor
 function ClientLevelPlayer.new()
 	local self = setmetatable({}, ClientLevelPlayer)
-	local remote = game:GetService("ReplicatedStorage"):WaitForChild("Softlocked"):WaitForChild("Remote")
+	local remote = game:GetService("ReplicatedStorage"):WaitForChild("BasicJToHPlayer"):WaitForChild("Remote")
 
 	self.remoteRequestLevel = remote:WaitForChild("RequestLevel")
 	self.remoteStopLevel = remote:WaitForChild("StopLevel")

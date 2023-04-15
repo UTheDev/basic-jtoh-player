@@ -12,7 +12,7 @@ local PhysicsService = game:GetService("PhysicsService")
 
 local InstanceLocator = require(
 	game:GetService("ReplicatedStorage")
-		:WaitForChild("Softlocked")
+		:WaitForChild("BasicJToHPlayer")
 		:WaitForChild("InstanceHandling")
 		:WaitForChild("InstanceLocator")
 )
